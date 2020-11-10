@@ -1,17 +1,26 @@
 from selenium import webdriver
 import csv
 
-csvFileName = 'output.csv'
+def newCSVFile():
 
-with open(csvFileName, 'w', newline='') as csvfile:
-	fieldnames = ['Quarter Back', 'Pass Yards', 'Yards Per Att', 'Number of Atts', 'Completions', 'Completion Percentage', 'TD', 'INT']
-	writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+	csvFileName = 'output.csv'
 
-	writer.writeheader()
+	with open(csvFileName, 'w', newline='') as csvfile:
+		fieldnames = ['Quarter Back', 'Pass Yards', 'Yards Per Att', 'Number of Atts', 'Completions', 'Completion Percentage', 'TD', 'INT']
+		writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
 
-def initialize():
+		writer.writeheader()
+
+def sendToCSV(quarterBack, passYds, ydsPerAtt, numAtts, Cmp, CmpPercent, TD, INT):
+	with open(csvFileName, 'a', newline='') as csvfile:
+		fieldnames = ['Quarter Back', 'Pass Yards', 'Yards Per Att', 'Number of Atts', 'Completions', 'Completion Percentage', 'TD', 'INT']
+		writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+		writer.writerow({'Quarter Back': quarterBack, 'Pass Yards': passYds, 'Yards Per Att': ydsPerAtt, 'Number of Atts': numAtts, 'Completions': Cmp, 'Completion Percentage': CmpPercent, 'TD': TD, 'INT': INT})
+
+def extract():
 	browser = webdriver.Chrome(executable_path='/usr/local/bin/chromedriver')
 	response = browser.get('https://www.nfl.com/stats/player-stats/')
+	newCSVFile()
 	print('on stats page')
 	rows = browser.find_elements_by_xpath("//*[@id='main-content']/section[3]/div/div/div/div/table/tbody/tr")	
 	for row_num in range(1,len(rows) + 1):
@@ -27,11 +36,5 @@ def initialize():
 		print(quarterBack, passYds, ydsPerAtt, numAtts, Cmp, CmpPercent, TD, INT)
 		sendToCSV(quarterBack, passYds, ydsPerAtt, numAtts, Cmp, CmpPercent, TD, INT)
 
-def sendToCSV(quarterBack, passYds, ydsPerAtt, numAtts, Cmp, CmpPercent, TD, INT):
-	with open(csvFileName, 'a', newline='') as csvfile:
-		fieldnames = ['Quarter Back', 'Pass Yards', 'Yards Per Att', 'Number of Atts', 'Completions', 'Completion Percentage', 'TD', 'INT']
-		writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
-		writer.writerow({'Quarter Back': quarterBack, 'Pass Yards': passYds, 'Yards Per Att': ydsPerAtt, 'Number of Atts': numAtts, 'Completions': Cmp, 'Completion Percentage': CmpPercent, 'TD': TD, 'INT': INT})
-
-initialize()
+extract()
 
