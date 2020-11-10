@@ -1,4 +1,13 @@
 from selenium import webdriver
+import csv
+
+csvFileName = 'output.csv'
+
+with open(csvFileName, 'w', newline='') as csvfile:
+	fieldnames = ['Quarter Back', 'Pass Yards', 'Yards Per Att', 'Number of Atts', 'Completions', 'Completion Percentage', 'TD', 'INT']
+	writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+
+	writer.writeheader()
 
 def initialize():
 	browser = webdriver.Chrome(executable_path='/usr/local/bin/chromedriver')
@@ -16,6 +25,13 @@ def initialize():
 		TD = browser.find_element_by_xpath(row_xpath + '/td[7]').text
 		INT = browser.find_element_by_xpath(row_xpath + '/td[8]').text
 		print(quarterBack, passYds, ydsPerAtt, numAtts, Cmp, CmpPercent, TD, INT)
+		sendToCSV(quarterBack, passYds, ydsPerAtt, numAtts, Cmp, CmpPercent, TD, INT)
+
+def sendToCSV(quarterBack, passYds, ydsPerAtt, numAtts, Cmp, CmpPercent, TD, INT):
+	with open(csvFileName, 'a', newline='') as csvfile:
+		fieldnames = ['Quarter Back', 'Pass Yards', 'Yards Per Att', 'Number of Atts', 'Completions', 'Completion Percentage', 'TD', 'INT']
+		writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+		writer.writerow({'Quarter Back': quarterBack, 'Pass Yards': passYds, 'Yards Per Att': ydsPerAtt, 'Number of Atts': numAtts, 'Completions': Cmp, 'Completion Percentage': CmpPercent, 'TD': TD, 'INT': INT})
 
 initialize()
 
