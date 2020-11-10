@@ -1,10 +1,9 @@
 from selenium import webdriver
 import csv
 
+csvFileName = 'output.csv'
+
 def newCSVFile():
-
-	csvFileName = 'output.csv'
-
 	with open(csvFileName, 'w', newline='') as csvfile:
 		fieldnames = ['Quarter Back', 'Pass Yards', 'Yards Per Att', 'Number of Atts', 'Completions', 'Completion Percentage', 'TD', 'INT']
 		writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
