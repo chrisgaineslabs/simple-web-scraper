@@ -5,7 +5,7 @@ This project intends to introduce developers to web scraping.
 
 * [Python3](https://www.python.org/downloads/)
 
-* Selenium
+* [Selenium](https://selenium-python.readthedocs.io)
 
 <code> python3 -m pip install selenium </code>
 
