@@ -3,10 +3,15 @@ This project intends to introduce developers to web scraping.
 
 ## Dependicies
 
-* Python3
+* [Python3](https://www.python.org/downloads/)
+
 * Selenium
-* chromedriver
-* Chrome
+
+<code> python3 -m pip install selenium </code>
+
+* [Chromedriver](https://chromedriver.chromium.org/downloads)
+
+* [Chrome](https://www.google.com/chrome/)
 
 ## Setup the Environment
 
